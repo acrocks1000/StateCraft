@@ -19,7 +19,7 @@
 
 ## 🚀 Technologies
 
-- Angular 17+
+- Angular 19+
 - NgRx (Store, Effects, Entity)
 - RxJS 7+
 - Angular Material / Tailwind (choose one)
@@ -32,12 +32,12 @@
 ```
 src/
 ├── app/
-│ ├── core/ # Shared services, interceptors
 │ ├── store/ # Global store config (app state, reducers, meta)
 │ ├── features/
 │ │ ├── products/ # Standalone component + feature store
 │ │ ├── cart/
 │ │ ├── auth/
+│ │ ├── orders/
 │ └── shared/ # Shared components, pipes, UI
 ├── assets/
 ├── environments/
