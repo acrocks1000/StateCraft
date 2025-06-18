@@ -19,7 +19,7 @@
 
 ## 🚀 Technologies
 
-- Angular 19+
+- Angular 20+
 - NgRx (Store, Effects, Entity)
 - RxJS 7+
 - Angular Material / Tailwind (choose one)
