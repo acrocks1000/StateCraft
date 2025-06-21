@@ -1,1 +1,60 @@
-<p>products works!</p>
+<!-- Carousel Wrapper -->
+<div class="relative w-full overflow-hidden mb-10"
+     (mouseenter)="onCarouselMouseEnter()"
+     (mouseleave)="onCarouselMouseLeave()">
+  <!-- Slide Container -->
+  <div
+    class="flex transition-transform duration-500 ease-in-out"
+    [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'"
+    style="width: 100%;"
+  >
+    <div
+      *ngFor="let card of carouselCards"
+      class="min-w-full"
+    >
+      <div class="carousel-bg h-64 flex items-center justify-between shadow-md rounded-lg overflow-hidden px-6 relative"
+           [ngStyle]="{'background-image': 'url(' + card.image + ')', 'background-size': 'cover', 'background-position': 'center'}">
+        <div class="absolute left-0 top-0 h-full w-2/5 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
+        <div class="carousel-text relative z-20 text-white p-4" style="max-width:40%">
+          <p class="text-sm">{{ card.subtitle }}</p>
+          <h2 class="text-2xl font-bold my-2 whitespace-pre-line">{{ card.title }}</h2>
+          <button mat-raised-button [color]="card.color">Shop Collection</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left Arrow -->
+  <button
+    class="flex absolute top-1/2 left-1 transform -translate-y-1/2 bg-white/25 hover:bg-white/75 rounded-full shadow p-1 z-10"
+    (click)="prevSlide()"
+  >
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <!-- Right Arrow -->
+  <button
+    class="flex absolute top-1/2 right-1 transform -translate-y-1/2 bg-white/25 hover:bg-white/75 rounded-full shadow p-1 z-10"
+    (click)="nextSlide()"
+  >
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>
+
+<!-- Product Highlights Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+  <mat-card *ngFor="let product of products" class="product-list">
+    <img mat-card-image [src]="product.image" [alt]="product.name" />
+    <mat-card-content>
+      <h3 class="font-semibold">{{ product.name }}</h3>
+      <p *ngIf="product.oldPrice" class="line-through text-sm text-gray-500">
+        ${{ product.oldPrice }}
+      </p>
+      <p class="text-lg text-yellow-600 font-bold">${{ product.price }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary">Add to Cart</button>
+      <button mat-button>Quick View</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

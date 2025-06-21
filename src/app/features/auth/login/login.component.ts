@@ -6,6 +6,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { provideState, Store } from '@ngrx/store';
+import { AuthState } from '../auth.reducer';
+import { login } from '../auth.actions';
+import { AuthService } from '../auth.service';
+import { noop, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +22,7 @@ import {
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<AuthState>, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -25,8 +31,20 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Login data:', this.loginForm.value);
-      // TODO: trigger login action
+      const value = this.loginForm.value;
+      this.authService
+        .login(value.email, value.password)
+        .pipe(
+          tap((user) => {
+            const newLoginAction = login({ user });
+            this.store.dispatch(newLoginAction);
+            this.router.navigate(['/store']);
+          })
+        )
+        .subscribe({
+          next: noop,
+          error: () => alert('Login failed'),
+        });
     } else {
       this.loginForm.markAllAsTouched(); // show all validation messages
     }
