@@ -1,6 +1,6 @@
 <!-- NavigationTabComponent -->
 <nav
-  class="bg-gray-100 border-b border-gray-300 px-4 sm:px-8 py-2 flex items-center justify-between"
+  class="bg-gray-100 border-b border-gray-300 px-4 sm:px-8 py-2 flex items-center justify-between min-h-16"
 >
   <!-- Left: Navigation Links -->
   <ul
@@ -20,6 +20,7 @@
 
   <!-- Right: Login / Sign Up -->
   <div class="flex gap-2">
+    @if (isLoggedOut$ | async) {
     <button
       class="text-sm sm:text-base font-medium text-blue-600 hover:underline"
       [routerLink]="['/login']"
@@ -27,12 +28,13 @@
     >
       Login
     </button>
+    } @if (isLoggedIn$ | async) {
     <button
       class="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm sm:text-base hover:bg-blue-700"
-      [routerLink]="['/sign-up']"
-      routerLinkActive="router-link-active"
+      (click)="logout()"
     >
-      Sign Up
+      Log out
     </button>
+    }
   </div>
 </nav>

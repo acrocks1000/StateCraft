@@ -11,6 +11,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './reducer';
 import * as fromAuth from './features/auth/auth.reducer';
 import { provideHttpClient } from '@angular/common/http';
+import { AuthGuard } from './features/auth/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(reducers, { metaReducers }),
     provideState({name: fromAuth.authFeatureKey, reducer: fromAuth.authReducer}),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideHttpClient()
+    provideHttpClient(),
+    AuthGuard
   ],
 };

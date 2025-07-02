@@ -43,9 +43,9 @@
 
 <!-- Product Highlights Section -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-  <mat-card *ngFor="let product of products" class="product-list">
+  <mat-card *ngFor="let product of products" class="product-list flex justify-between">
     <img mat-card-image [src]="product.image" [alt]="product.name" />
-    <mat-card-content>
+    <mat-card-content class="mt-2">
       <h3 class="font-semibold">{{ product.name }}</h3>
       <p *ngIf="product.oldPrice" class="line-through text-sm text-gray-500">
         ${{ product.oldPrice }}
