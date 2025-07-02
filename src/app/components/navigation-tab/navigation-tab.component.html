@@ -1,0 +1,40 @@
+<!-- NavigationTabComponent -->
+<nav
+  class="bg-gray-100 border-b border-gray-300 px-4 sm:px-8 py-2 flex items-center justify-between min-h-16"
+>
+  <!-- Left: Navigation Links -->
+  <ul
+    class="flex flex-wrap gap-4 text-sm sm:text-base font-medium text-gray-700"
+  >
+    <li>
+      <a [routerLink]="['/store']" class="hover:text-blue-600 transition p-2"
+        >Dashboard</a
+      >
+    </li>
+    <li><a href="#" class="hover:text-blue-600 transition p-2">Features</a></li>
+    <li>
+      <a href="#" class="hover:text-blue-600 transition p-2">Analytics</a>
+    </li>
+    <li><a href="#" class="hover:text-blue-600 transition p-2">Settings</a></li>
+  </ul>
+
+  <!-- Right: Login / Sign Up -->
+  <div class="flex gap-2">
+    @if (isLoggedOut$ | async) {
+    <button
+      class="text-sm sm:text-base font-medium text-blue-600 hover:underline"
+      [routerLink]="['/login']"
+      routerLinkActive="router-link-active"
+    >
+      Login
+    </button>
+    } @if (isLoggedIn$ | async) {
+    <button
+      class="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm sm:text-base hover:bg-blue-700"
+      (click)="logout()"
+    >
+      Log out
+    </button>
+    }
+  </div>
+</nav>

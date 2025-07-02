@@ -1,0 +1,72 @@
+.example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.dev/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .carousel {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1rem;
+  }
+
+  mat-card {
+    max-height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s, width 0.2s;
+    width: 100%;
+    &.highlight-card {
+      transform: scale(1.15);
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      width: 120%;
+    }
+  }
+
+  img[mat-card-image], .carousel img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .carousel-controls button {
+    margin: 0 0.5rem;
+  }
+
+  .carousel-bg .carousel-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    display: block;
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-bg .carousel-text {
+      font-size: 0.95rem;
+      padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+      max-width: 70vw;
+    }
+    .carousel-bg h2 {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-bg .carousel-text {
+      font-size: 0.85rem;
+      max-width: 90vw;
+      padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+    }
+    .carousel-bg h2 {
+      font-size: 1rem;
+    }
+  }
