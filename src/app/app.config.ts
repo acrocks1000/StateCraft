@@ -12,15 +12,28 @@ import { reducers, metaReducers } from './reducer';
 import * as fromAuth from './features/auth/auth.reducer';
 import { provideHttpClient } from '@angular/common/http';
 import { AuthGuard } from './features/auth/auth.guard';
+import { provideEffects } from '@ngrx/effects';
+import { AuthEffects } from './features/auth/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore(reducers, { metaReducers }),
-    provideState({name: fromAuth.authFeatureKey, reducer: fromAuth.authReducer}),
+    provideStore(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionSerializability: true,
+        strictStateSerializability: true,
+      },
+    }),
+    provideState({
+      name: fromAuth.authFeatureKey,
+      reducer: fromAuth.authReducer,
+    }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(),
-    AuthGuard
+    provideEffects(AuthEffects),
   ],
 };

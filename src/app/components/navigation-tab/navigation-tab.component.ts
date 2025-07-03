@@ -25,12 +25,7 @@ export class NavigationTabComponent implements OnInit {
         select(isLoggedIn)
       )
       this.isLoggedOut$ = this.store.pipe(
-        select(isLoggedOut),
-        tap(isLoggedOut => {
-          if(isLoggedOut) {
-            this.router.navigate(['/login']);
-          }
-        })
+        select(isLoggedOut)
       )
   }
 
