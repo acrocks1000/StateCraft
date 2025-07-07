@@ -14,26 +14,31 @@ import { provideHttpClient } from '@angular/common/http';
 import { AuthGuard } from './features/auth/auth.guard';
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffects } from './features/auth/auth.effects';
+import { provideRouterStore, RouterState } from '@ngrx/router-store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideStore(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictActionSerializability: true,
-        strictStateSerializability: true,
-      },
+        metaReducers,
+        runtimeChecks: {
+            strictStateImmutability: true,
+            strictActionImmutability: true,
+            strictActionSerializability: true,
+            strictStateSerializability: true,
+        },
     }),
     provideState({
-      name: fromAuth.authFeatureKey,
-      reducer: fromAuth.authReducer,
+        name: fromAuth.authFeatureKey,
+        reducer: fromAuth.authReducer,
     }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(),
     provideEffects(AuthEffects),
-  ],
+    provideRouterStore({
+      stateKey: 'router',
+      routerState: RouterState.Minimal
+    })
+],
 };
