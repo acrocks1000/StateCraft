@@ -43,7 +43,7 @@
 
 <!-- Product Highlights Section -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-  <mat-card *ngFor="let product of products" class="product-list flex justify-between">
+  <mat-card *ngFor="let product of products()" class="product-list flex justify-between">
     <img mat-card-image [src]="product.image" [alt]="product.name" />
     <mat-card-content class="mt-2">
       <h3 class="font-semibold">{{ product.name }}</h3>
@@ -53,7 +53,7 @@
       <p class="text-lg text-yellow-600 font-bold">${{ product.price }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary">Add to Cart</button>
+      <button mat-button color="primary" (click)="updateCart(product.id)">Add to Cart</button>
       <button mat-button>Quick View</button>
     </mat-card-actions>
   </mat-card>

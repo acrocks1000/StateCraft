@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { SharedService } from '../../shared/shared.service';
+import { Store } from '@ngrx/store';
+import { State } from 'app/reducer';
+import { SharedService } from 'app/shared/shared.service';
+import { ProductActions } from './action-types';
+import { IProducts } from 'app/shared/models/products.model';
+import { selectAllProducts } from './products.selectors';
 
 @Component({
   selector: 'app-products',
@@ -12,7 +17,7 @@ import { SharedService } from '../../shared/shared.service';
   styleUrl: './products.component.scss',
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  products: any[] = [];
+  products!: Signal<IProducts[]>;
   currentIndex = 0;
   isCarouselHovered = false;
 
@@ -64,13 +69,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
   highlightIndex = 3; // Center card
   autoplayInterval: any;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private sharedService: SharedService, private store: Store<State>) {}
 
   ngOnInit() {
-    this.sharedService.getProducts().subscribe({
-      next: (products) => (this.products = products),
-      error: (error) => console.warn('Could not load products!!'),
-    });
+    // this.sharedService.getProducts().subscribe({
+    //   next: (products) => (this.products = products),
+    //   error: (error) => console.warn('Could not load products!!'),
+    // });
+
+    this.products = this.store.selectSignal(selectAllProducts);
+
     this.startAutoplay();
   }
 
@@ -100,5 +108,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onCarouselMouseLeave() {
     this.isCarouselHovered = false;
+  }
+
+  updateCart(productId: number) {
+    let product = this.products().find(item => item.id === productId);
+    if (product) {
+      this.store.dispatch(ProductActions.addToCart({product}));
+    }
   }
 }

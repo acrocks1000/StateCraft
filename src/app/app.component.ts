@@ -6,6 +6,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { Store } from '@ngrx/store';
 import { State } from './reducer';
 import { login } from './features/auth/auth.actions';
+import { AppLoaderComponent } from "./components/app-loader/app-loader.component";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { login } from './features/auth/auth.actions';
     HeaderComponent,
     NavigationTabComponent,
     FooterComponent,
-  ],
+    AppLoaderComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

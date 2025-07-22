@@ -6,6 +6,18 @@ export const USERS = {
   },
 };
 
+export interface ProductDetails {
+  id: number;
+  name: string;
+  price: number;
+  oldPrice?: number;
+  image: string;
+}
+
+export interface CartProductDetails extends ProductDetails {
+  quantity: number
+}
+
 export const PRODUCTS = [
   { id: 1, name: 'Storm Small Jug', price: 19.12, oldPrice: 23.9, image: 'products/pexels-jug.jpg' },
   { id: 2, name: 'Side Table', price: 29, image: 'products/pexels-chair.jpg' },
@@ -18,6 +30,8 @@ export const PRODUCTS = [
   { id: 9, name: 'Minimalist Table', price: 39.99, image: 'products/pexels-chair.jpg' },
   { id: 10, name: 'Decorative Jug', price: 18.75, image: 'products/pexels-jug.jpg' },
 ];
+
+export const CART: CartProductDetails[]= [];
 
 export function authenticate(email: string, password: string) {
   const user: any = Object.values(USERS).find((user) => user.email === email);

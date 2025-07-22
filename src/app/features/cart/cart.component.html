@@ -1,1 +1,55 @@
-<p>cart works!</p>
+<div class="cart-container">
+  <h2>Your Cart</h2>
+
+  <div *ngIf="cartItems().length > 0; else emptyCart">
+    @for (item of cartItems(); track $index) {
+    <div class="flex justify-between m-2 py-5 border-b border-gray-300">
+      <div class="product-details flex">
+        <img
+          class="mx-5 my-2"
+          [src]="item.image"
+          alt="{{ item.name }}"
+          width="60"
+          height="60"
+        />
+        <div class="my-2">
+          <p>
+            <strong>{{ item.name }}</strong>
+          </p>
+          <p>Price: ₹{{ item.price }}</p>
+          <p>Subtotal: ₹{{ item.price * item.quantity }}</p>
+        </div>
+      </div>
+
+      <div class="control-wrapper flex flex-col h-fit">
+        <div class="counter border border-gray-300">
+          <button
+            class="p-2 border border-gray-300 bg-gray-100"
+            (click)="updateQuantity(item.id, item.quantity - 1)"
+            [disabled]="item.quantity <= 1"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="p-2">{{ item.quantity }}</span>
+          <button
+            class="p-2 border border-gray-300 bg-gray-100"
+            (click)="updateQuantity(item.id, item.quantity + 1)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <button class="py-2 px-4 " (click)="removeItem(item.id)">Remove</button>
+      </div>
+    </div>
+    }
+
+    <div class="cart-summary">
+      <p>Total Items: {{ totalQuantity() }}</p>
+      <p>Total Price: ₹{{ totalPrice() }}</p>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>
+</div>
